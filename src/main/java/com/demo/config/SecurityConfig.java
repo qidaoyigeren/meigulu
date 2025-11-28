@@ -18,6 +18,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -44,7 +45,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 公开接口：注册、登录、获取用户资料
                         .requestMatchers("/api/user/register", "/api/user/login").permitAll()
-                        .requestMatchers("/api/user/{userId}").permitAll()  // 添加此行
+                        .requestMatchers("/api/user/{userId}").permitAll()
+                        // 文章相关公开接口：获取列表、获取详情
+                        .requestMatchers("/api/article/list").permitAll()
+                        .requestMatchers("/api/article/{articleId}").permitAll()
                         // 其他接口需要认证
                         .anyRequest().authenticated()
                 )

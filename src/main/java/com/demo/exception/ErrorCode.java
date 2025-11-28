@@ -8,25 +8,35 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 
-    // 成功
-    SUCCESS(0, "操作成功"),
+    // 通用错误 (1xxx)
+    SUCCESS(0, "成功"),
+    INTERNAL_SERVER_ERROR(1000, "服务器内部错误"),
+    MISSING_REQUIRED_FIELDS(1001, "缺少必填字段"),
 
-    // 用户相关错误
-    USERNAME_ALREADY_EXISTS(1001, "用户名已被占用。"),
-    MISSING_REQUIRED_FIELDS(1002, "用户名和密码是必需的。"),
-    INVALID_CREDENTIALS(1003, "用户名或密码错误。"),
-    UNAUTHORIZED(1004, "需要登录或提供有效的访问令牌。"),
-    USER_NOT_FOUND(1005, "用户未找到。"),
-    FORBIDDEN(1006, "没有权限更新该用户资料。"),
+    // 文章相关错误 (2xxx)
+    ARTICLE_TITLE_CONTENT_EMPTY(2001, "标题或内容不能为空"),
 
-    // 关注相关错误
-    ALREADY_FOLLOWED(1011, "已关注该用户。"),
-    NOT_FOLLOWED(1012, "未关注该用户。"),
-    CANNOT_FOLLOW_SELF(1013, "不能关注自己。"),
+    // 文章列表错误 (3xxx)
+    ARTICLE_LIST_ERROR(3001, "获取列表失败，请稍后再试"),
 
-    // 系统错误
-    INTERNAL_SERVER_ERROR(5000, "服务器内部错误。"),
-    INVALID_TOKEN(5001, "无效的访问令牌。");
+    // 文章详情/修改/删除错误 (4xxx)
+    ARTICLE_NOT_FOUND(4004, "文章不存在或已被删除"),
+    ARTICLE_ACCESS_DENIED(4003, "无权限操作此文章"),
+
+    // 用户相关错误 (5xxx)
+    USER_NOT_FOUND(5001, "用户不存在"),
+    USERNAME_ALREADY_EXISTS(5002, "用户名已存在"),
+    INVALID_CREDENTIALS(5003, "用户名或密码错误"),
+
+    // 认证授权错误 (6xxx)
+    UNAUTHORIZED(6001, "未授权，请先登录"),
+    FORBIDDEN(6002, "禁止访问"),
+    INVALID_TOKEN(6003, "无效的token"),
+
+    // 关注相关错误 (7xxx)
+    ALREADY_FOLLOWED(7001, "已经关注过该用户"),
+    NOT_FOLLOWED(7002, "未关注该用户"),
+    CANNOT_FOLLOW_SELF(7003, "不能关注自己");
 
     private final int code;
     private final String message;
